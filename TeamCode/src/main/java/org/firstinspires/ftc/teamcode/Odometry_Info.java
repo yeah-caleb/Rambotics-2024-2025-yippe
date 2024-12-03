@@ -6,12 +6,35 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Odometry_Info {
 
+
+    // Odometry Pod Initialization
     DcMotorEx odoRight = null;
     DcMotorEx odoLeft = null;
     DcMotorEx odoBack = null;
 
-    /*static variables for odometry sensor stats*/
-    static double odoTPM = 2000.0;
+    /* THE FOLLOWING IS THE LIST OF THE STATIC VARIABLES, WHAT THEY ARE, AND WHEN
+       THEY NEED TO BE CHANGED
+    *
+    *  OdoTPR - The amount of ticks per revoloution of the odometry pod.
+    *           should only ever be changed when the odometry pods are changed out
+    *
+    *  C - this is the circumfrence of the odometry sensor. its 2 * PI * Radius.
+    *      The current radius is 16, this should be changed when odometry pods
+    *      are changed, and only the 16 should be changed to the new radius value
+    *      and nothing else
+    *
+    *  L - This is the distance between the two parrallel odometry sensors. This
+    *      variable should only be changed when the odometry sensors are moved
+    *      (This will probably happen with every iteration of the robot)
+    *
+    *  B - This is the distance between the perpindicular odometry sensor and the
+    *      center of the robot (The center line that is parrallel to the sensor).
+    *      This variable should only be changed when the odometry sensors are moved
+    *      (This will probably happen with every iteration of the robot)
+    *
+    * */
+
+    static double odoTPR = 2000.0;
     static double C = 2*Math.PI*16;
     static double L = 190.504;
     static double B = 42.382;
@@ -47,9 +70,9 @@ public class Odometry_Info {
     /* this function should be placed in the loop section*/
     public void updateCurPos(){
 
-        Cn1 = C*(odoRight.getCurrentPosition()/odoTPM);
-        Cn2 = C*(odoLeft.getCurrentPosition()/odoTPM);
-        Cn3 = C*(odoBack.getCurrentPosition()/odoTPM);
+        Cn1 = C*(odoRight.getCurrentPosition()/odoTPR);
+        Cn2 = C*(odoLeft.getCurrentPosition()/odoTPR);
+        Cn3 = C*(odoBack.getCurrentPosition()/odoTPR);
 
         Xc = ((Cn1+Cn2)/2);
         Theta0 = cur0;
