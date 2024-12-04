@@ -4,6 +4,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+/*
+   This class creates the odometry pods, tracks measurements from the odometry pods,
+   translates the measurements into X, Y, and Theta positions for the robot, and
+   it gives tool functions to the odometry pods for various uses in the autonomus
+*/
+
 public class Odometry_Info {
 
 
@@ -58,6 +64,8 @@ public class Odometry_Info {
     double Cn2 = 0.0;
     double Cn3 = 0.0;
 
+
+    // Constructor (You should know that)
     Odometry_Info(HardwareMap hwMap){
         odoRight = hwMap.get(DcMotorEx.class, "Odometry_Pod_Right");
         odoLeft = hwMap.get(DcMotorEx.class, "Odometry_Pod_Left");
@@ -67,7 +75,10 @@ public class Odometry_Info {
         odoLeft.setDirection(DcMotorEx.Direction.REVERSE);
     }
 
-    /* this function should be placed in the loop section*/
+    /* This is the state function, should be placed in loop. This is a lot of math
+    on Odometry, a good resource to use to understand the basics of Odometry is
+    this game manual: https://gm0.org/en/latest/docs/software/concepts/odometry.html */
+
     public void updateCurPos(){
 
         Cn1 = C*(odoRight.getCurrentPosition()/odoTPR);
@@ -100,6 +111,8 @@ public class Odometry_Info {
         }
     }
 
+    /* the RUN_WITHOUT_ENCODERS runmode isn't turning off the encoders,
+    its making the motors move based on power inputs and not encoder inputs */
     public void resetEncoders(){
         odoLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         odoRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
