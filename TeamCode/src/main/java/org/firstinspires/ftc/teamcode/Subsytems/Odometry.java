@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsytems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
    it gives tool functions to the odometry pods for various uses in the autonomus
 */
 
-public class Odometry_Info {
+public class Odometry {
 
 
     // Odometry Pod Initialization
@@ -40,33 +40,34 @@ public class Odometry_Info {
     *
     * */
 
-    static double odoTPR = 2000.0;
-    static double C = 2*Math.PI*16;
-    static double L = 190.504;
-    static double B = 42.382;
+    //190.504
+    static final double odoTPR = 2000.0;
+    static final double C = 2*Math.PI*16;
+    static final double L = 167;
+    static final double B = 42.382;
 
     /* Variables to notate the current positions of the robot*/
-    double Xc = 0.0;
-    double Xp = 0.0;
-    double Theta0 = 0.0;
+    public double Xc = 0.0;
+    public double Xp = 0.0;
+    public double Theta0 = 0.0;
 
-    double curX = 0.0;
-    double curY = 0.0;
-    double cur0 = 0.0;
+    public double curX = 0.0;
+    public double curY = 0.0;
+    public double cur0 = 0.0;
 
     /*Target Position Variables*/
-    double tarX = 0.0;
-    double tarY = 0.0;
-    double tar0 = 0.0;
+    public double tarX = 0.0;
+    public double tarY = 0.0;
+    public double tar0 = 0.0;
 
     /* Distance Variables for the odo in MM. 1 = right, 2 = left, 3 = back */
-    double Cn1 = 0.0;
-    double Cn2 = 0.0;
-    double Cn3 = 0.0;
+    public double Cn1 = 0.0;
+    public double Cn2 = 0.0;
+    public double Cn3 = 0.0;
 
 
     // Constructor (You should know that)
-    Odometry_Info(HardwareMap hwMap){
+    public Odometry(HardwareMap hwMap){
         odoRight = hwMap.get(DcMotorEx.class, "Odometry_Pod_Right");
         odoLeft = hwMap.get(DcMotorEx.class, "Odometry_Pod_Left");
         odoBack = hwMap.get(DcMotorEx.class, "Odometry_Pod_Back");

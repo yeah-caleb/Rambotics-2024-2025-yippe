@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsytems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class JarlsCHasse {
+public class Drivetrain {
 
     /* This is the class used to control the functionality of the Drivetrain.
      It controls the Mecanum Wheels and has functions for Field Centric Movement*/
@@ -28,7 +28,7 @@ public class JarlsCHasse {
     //Other Variables
     double max;
 
-    JarlsCHasse(HardwareMap hwMap){
+    public Drivetrain(HardwareMap hwMap){
         RMFront = hwMap.get(DcMotorEx.class, "rightFront");
         LMFront = hwMap.get(DcMotorEx.class, "leftFront");
         RMBack = hwMap.get(DcMotorEx.class, "rightRear");
@@ -68,8 +68,7 @@ public class JarlsCHasse {
 
     }
 
-    public void turn0Clockwise(boolean sign){
-
+    public void turnThetaClockwise(boolean sign){
         if(sign) {
             rXmov = 1;
         }
