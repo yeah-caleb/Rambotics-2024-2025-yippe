@@ -45,38 +45,28 @@ public class Drivetrain {
 
     // Functions for Autonomus field centric movement
 
-    public void moveY(boolean sign, double rotation){
+    public void translate()
+    {
 
-        if(sign) {
-            Xmov = (1 * Math.cos(rotation) - (0 * Math.sin(rotation)));
-        }
-        else{
-            Xmov = -(0 * Math.cos(rotation) - (1 * Math.sin(rotation)));
-        }
-
-    }
-
-    public void moveX(boolean sign, double rotation){
-
-        if(sign) {
-            Ymov = (0 * Math.sin(rotation) + (1 * Math.cos(rotation)));
-        }
-        else{
-            Ymov = -(0 * Math.sin(rotation) + (1 * Math.cos(rotation)));
-        }
 
 
     }
 
-    public void turnThetaClockwise(boolean sign){
-        if(sign) {
-            rXmov = 1;
-        }
-        else{
-            rXmov = -1;
-        }
 
-    }
+    // (xt * Math.cos(rotation) - (yt * Math.sin(rotation)))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // State functions. These should Always go inside the Loop() function of an opmode
 
