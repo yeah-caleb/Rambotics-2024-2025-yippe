@@ -1,24 +1,22 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.dontoworry;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.JarlsCHasse;
+import org.firstinspires.ftc.teamcode.Subsytems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsytems.Odometry;
 
 @Autonomous
 public class Jarlsnerg_odometry extends OpMode{
 
-    JarlsCHasse drivetrain;
-    Odometry_Info odom;
+    Drivetrain drivetrain;
+    Odometry odom;
 
     @Override
     public void init() {
 
-        drivetrain = new JarlsCHasse(hardwareMap);
-        odom = new Odometry_Info(hardwareMap);
+        drivetrain = new Drivetrain(hardwareMap);
+        odom = new Odometry(hardwareMap);
 
         odom.setTargetPos(400, 0, 90);
         odom.resetEncoders();
@@ -27,7 +25,7 @@ public class Jarlsnerg_odometry extends OpMode{
 
     }
 
-    public void driveToTarPos(Odometry_Info odop) {
+    public void driveToTarPos(Odometry odop) {
             if (odop.cur0 != odop.tar0) {
                 drivetrain.turn0Clockwise(true);
             }

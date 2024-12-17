@@ -1,12 +1,16 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsytems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class JarlsCHasse {
+public class Drivetrain {
 
+    /* This is the class used to control the functionality of the Drivetrain.
+     It controls the Mecanum Wheels and has functions for Field Centric Movement*/
+
+    // Motor Initialization
     DcMotorEx RMFront = null;
     DcMotorEx LMFront = null;
     DcMotorEx RMBack = null;
@@ -17,12 +21,14 @@ public class JarlsCHasse {
     double Ymov = 0.0;
     double rXmov = 0.0;
 
+    // Teleop Moving Stats
     double x;
     double y;
 
+    //Other Variables
     double max;
 
-    JarlsCHasse(HardwareMap hwMap){
+    public Drivetrain(HardwareMap hwMap){
         RMFront = hwMap.get(DcMotorEx.class, "rightFront");
         LMFront = hwMap.get(DcMotorEx.class, "leftFront");
         RMBack = hwMap.get(DcMotorEx.class, "rightRear");
@@ -36,6 +42,8 @@ public class JarlsCHasse {
         RMBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         LMBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
+
+    // Functions for Autonomus field centric movement
 
     public void moveY(boolean sign, double rotation){
 
@@ -60,8 +68,7 @@ public class JarlsCHasse {
 
     }
 
-    public void turn0Clockwise(boolean sign){
-
+    public void turnThetaClockwise(boolean sign){
         if(sign) {
             rXmov = 1;
         }
@@ -71,6 +78,9 @@ public class JarlsCHasse {
 
     }
 
+    // State functions. These should Always go inside the Loop() function of an opmode
+
+    //This one is for teleop
     public void GamepadInputs(double rotation, Gamepad gmpad){
 
         float xt = gmpad.left_stick_x;
@@ -105,6 +115,8 @@ public class JarlsCHasse {
 
     }
 
+
+    // This one is for auto
     public void coordinateBasedState(){
         RMFront.setPower(-Xmov+Ymov-rXmov);
         LMFront.setPower(Xmov+Ymov+rXmov);
@@ -112,6 +124,7 @@ public class JarlsCHasse {
         LMBack.setPower(-Xmov+Ymov+rXmov);
     }
 
+    // Tool functions
     public void HALT(){
         Xmov = 0;
         Ymov = 0;

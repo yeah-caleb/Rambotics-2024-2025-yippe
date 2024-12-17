@@ -1,13 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Subsytems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
-public class CheetoFingers {
+public class Arm {
 
     DcMotorEx RM;
     DcMotorEx LM;
@@ -18,7 +17,7 @@ public class CheetoFingers {
 
     double armJoint;
 
-    CheetoFingers(HardwareMap hm){
+    Arm(HardwareMap hm){
 
         RM = hm.get(DcMotorEx.class, "armMotor");
         LM = hm.get(DcMotorEx.class, "Odometry_Pod_Right");
