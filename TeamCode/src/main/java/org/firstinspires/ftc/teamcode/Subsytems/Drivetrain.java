@@ -28,7 +28,8 @@ public class Drivetrain {
     //Other Variables
     double max;
 
-    public Drivetrain(HardwareMap hwMap){
+    public Drivetrain(HardwareMap hwMap)
+    {
         RMFront = hwMap.get(DcMotorEx.class, "rightFront");
         LMFront = hwMap.get(DcMotorEx.class, "leftFront");
         RMBack = hwMap.get(DcMotorEx.class, "rightRear");
@@ -45,28 +46,14 @@ public class Drivetrain {
 
     // Functions for Autonomus field centric movement
 
-    public void translate()
+    public void translate(double xp, double yp, double thetap, double rotation)
     {
 
-
+        Xmov = (xp * Math.cos(rotation) - (yp * Math.sin(rotation)));
+        Ymov = (xp * Math.sin(rotation) + (yp * Math.cos(rotation)));
+        rXmov = thetap;
 
     }
-
-
-    // (xt * Math.cos(rotation) - (yt * Math.sin(rotation)))
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // State functions. These should Always go inside the Loop() function of an opmode
 
@@ -79,7 +66,6 @@ public class Drivetrain {
 
         x = (xt * Math.cos(rotation) - (yt * Math.sin(rotation)));
         y = (xt * Math.sin(rotation) + (yt * Math.cos(rotation)));
-
 
         double leftFrontPower = y+x+rx;
         double rightFrontPower = y-x-rx;
@@ -97,7 +83,6 @@ public class Drivetrain {
             rightBackPower  /= max;
         }
 
-
         LMFront.setPower(leftFrontPower);
         RMFront.setPower(rightFrontPower);
         LMBack.setPower(leftBackPower);
@@ -105,9 +90,9 @@ public class Drivetrain {
 
     }
 
-
     // This one is for auto
-    public void coordinateBasedState(){
+    public void coordinateBasedState()
+    {
         RMFront.setPower(-Xmov+Ymov-rXmov);
         LMFront.setPower(Xmov+Ymov+rXmov);
         RMBack.setPower(Xmov+Ymov-rXmov);
@@ -120,6 +105,9 @@ public class Drivetrain {
         Ymov = 0;
         rXmov = 0;
     }
+
+
+
 
 
 }
