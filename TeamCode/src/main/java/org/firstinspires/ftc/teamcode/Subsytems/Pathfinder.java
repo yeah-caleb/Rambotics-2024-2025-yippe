@@ -6,35 +6,64 @@ public class Pathfinder {
     double curPosY;
     double curPosTheta;
 
-    double tarPosX;
-    double tarPosY;
-    double tarRotation;
+    public double tarPosX;
+    public double tarPosY;
+    public double tarRotation;
 
-    double x;
-    double y;
-    double theta;
+    public double x;
+    public double y;
+    public double theta = 0.0;
 
-    public void setTarPos(double x, double y, double theta)
+    public void setTarPos(double xp, double yp, double thetap)
     {
-        tarPosX = x;
-        tarPosY = y;
-        tarRotation = theta;
+        tarPosX = xp;
+        tarPosY = yp;
+        tarRotation = thetap;
     }
 
-    public void pathfind(double curX, double curY, double curTheta)
+    public void runToTargetPos(double curX, double curY, double curTheta)
     {
 
-        if(curX != tarPosX && curY != tarPosY && curTheta != tarRotation)
+        if(curX != tarPosX || curY != tarPosY || curTheta != tarRotation)
         {
 
-            if(curX < tarPosX)
+            if(Math.abs(curX - tarPosX) <= 100)
             {
-                curX = 1;
+               x = 0;
             }
-            else if(curX)
+            else if(curX < tarPosX)
+            {
+                x = 0.5;
+            }
+            else if(curX > tarPosX)
+            {
+                x = -0.5;
+            }
+
+
+            if(Math.abs(curY - tarPosY) <= 100)
+            {
+               y = 0;
+            }
+            else if(curY < tarPosY)
+            {
+                y = 0.5;
+            }
+            else if(curY > tarPosY)
+            {
+                y = -0.5;
+            }
+
+            if(Math.abs(tarRotation-Math.toDegrees(curTheta)) >= 20)
+            {
+                theta = 0.5;
+            }
+            else
+            {
+                theta = 0;
+            }
 
         }
-
     }
 
 }

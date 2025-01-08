@@ -14,9 +14,9 @@ public class Odometry {
 
 
     // Odometry Pod Initialization
-    DcMotorEx odoRight = null;
-    DcMotorEx odoLeft = null;
-    DcMotorEx odoBack = null;
+    public DcMotorEx odoRight = null;
+    public DcMotorEx odoLeft = null;
+    public DcMotorEx odoBack = null;
 
     /* THE FOLLOWING IS THE LIST OF THE STATIC VARIABLES, WHAT THEY ARE, AND WHEN
        THEY NEED TO BE CHANGED
@@ -68,12 +68,9 @@ public class Odometry {
 
     // Constructor (You should know that)
     public Odometry(HardwareMap hwMap){
-        odoRight = hwMap.get(DcMotorEx.class, "Odometry_Pod_Right");
-        odoLeft = hwMap.get(DcMotorEx.class, "Odometry_Pod_Left");
-        odoBack = hwMap.get(DcMotorEx.class, "Odometry_Pod_Back");
-
-        odoRight.setDirection(DcMotorEx.Direction.REVERSE);
-        odoLeft.setDirection(DcMotorEx.Direction.REVERSE);
+        odoRight = hwMap.get(DcMotorEx.class, "rightRear");
+        odoLeft = hwMap.get(DcMotorEx.class, "leftRear");
+        odoBack = hwMap.get(DcMotorEx.class, "rightFront");
     }
 
     /* This is the state function, should be placed in loop. This is a lot of math
@@ -83,7 +80,7 @@ public class Odometry {
     public void updateCurPos(){
 
         Cn1 = C*(odoRight.getCurrentPosition()/odoTPR);
-        Cn2 = C*(odoLeft.getCurrentPosition()/odoTPR);
+        Cn2 = C*(-odoLeft.getCurrentPosition()/odoTPR);
         Cn3 = C*(odoBack.getCurrentPosition()/odoTPR);
 
         Xc = ((Cn1+Cn2)/2);

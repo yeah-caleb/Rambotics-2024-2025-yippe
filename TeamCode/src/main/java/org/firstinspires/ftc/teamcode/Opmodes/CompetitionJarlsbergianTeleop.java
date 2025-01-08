@@ -33,8 +33,9 @@ public class CompetitionJarlsbergianTeleop extends OpMode {
         telemetry.addData("Y Value", odo.Xp);
         telemetry.addData("odoback", odo.Cn3);
 
-        //telemetry.addData("Right Finger", arm.FINGER_RS.getPosition());
-        //telemetry.addData("Left Finger", arm.FINGER_LS.getPosition());
+        telemetry.addData("odoright", odo.odoRight.getCurrentPosition());
+        telemetry.addData("odoleft", odo.odoLeft.getCurrentPosition());
+        telemetry.addData("odoback", odo.odoBack.getCurrentPosition());
 
 
     }

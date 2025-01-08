@@ -44,7 +44,7 @@ public class Drivetrain {
         LMBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    // Functions for Autonomus field centric movement
+    // Functions for field centric movement
 
     public void translate(double xp, double yp, double thetap, double rotation)
     {
@@ -90,13 +90,41 @@ public class Drivetrain {
 
     }
 
+    // Auto Setter Function
+    public void autoSetter(double xp, double yp, double rXp){
+        Xmov = xp;
+        Ymov = yp;
+        rXmov = rXp;
+    }
+
     // This one is for auto
-    public void coordinateBasedState()
+    public void coordinateBasedState(double cur0p)
     {
-        RMFront.setPower(-Xmov+Ymov-rXmov);
-        LMFront.setPower(Xmov+Ymov+rXmov);
-        RMBack.setPower(Xmov+Ymov-rXmov);
-        LMBack.setPower(-Xmov+Ymov+rXmov);
+
+        double Xmov2 = (Xmov * Math.cos(cur0p) - (Ymov * Math.sin(cur0p)));
+        double Ymov2 = (Xmov * Math.sin(cur0p) + (Ymov * Math.cos(cur0p)));
+
+        double leftFrontPower = Ymov2+Xmov2+rXmov;
+        double rightFrontPower = -Ymov2+Xmov2-rXmov;
+        double leftBackPower = -Ymov2+Xmov2+rXmov;
+        double rightBackPower = Ymov2+Xmov2-rXmov;
+
+        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+        max = Math.max(max, Math.abs(leftBackPower));
+        max = Math.max(max, Math.abs(rightBackPower));
+
+        if (max > 1.0) {
+            leftFrontPower  /= max;
+            rightFrontPower /= max;
+            leftBackPower   /= max;
+            rightBackPower  /= max;
+        }
+
+        LMFront.setPower(leftFrontPower);
+        RMFront.setPower(rightFrontPower);
+        LMBack.setPower(leftBackPower);
+        RMBack.setPower(rightBackPower);
+
     }
 
     // Tool functions
@@ -106,7 +134,14 @@ public class Drivetrain {
         rXmov = 0;
     }
 
+public void shit(){
 
+        RMFront.setPower(1);
+        LMFront.setPower(1);
+        LMBack.setPower(1);
+        RMBack.setPower(1);
+
+}
 
 
 
