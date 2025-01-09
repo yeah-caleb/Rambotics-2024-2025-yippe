@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.Subsytems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Subsytems.Odometry;
 import org.firstinspires.ftc.teamcode.Subsytems.Pathfinder;
+import org.firstinspires.ftc.teamcode.utils.targetDogs;
+
+import java.util.ArrayList;
 
 @Autonomous(name="YarlsbergCanRun")
 public class CompeitionAutonomus extends OpMode {
@@ -13,6 +16,9 @@ public class CompeitionAutonomus extends OpMode {
     Drivetrain drivetrain;
     Odometry odo;
     Pathfinder path;
+
+    ArrayList<targetDogs> sequance = new ArrayList<>();
+
 
     @Override
     public void init() {
@@ -22,15 +28,18 @@ public class CompeitionAutonomus extends OpMode {
         path = new Pathfinder();
         odo.resetEncoders();
 
-        path.setTarPos(-200,-300,0);
+        //path.setTarPos(200,-300,0);
 
+        sequance.add(new targetDogs(200,100,0));
+        sequance.add(new targetDogs(50, 50, 0));
     }
 
     @Override
     public void loop() {
 
         odo.updateCurPos();
-        path.runToTargetPos(odo.curX,odo.curY,odo.cur0);
+        //path.runToTargetPos(odo.curX,odo.curY,odo.cur0);
+
         drivetrain.autoSetter(path.x, path.y, path.theta);
         drivetrain.coordinateBasedState(odo.cur0);
 
@@ -51,4 +60,5 @@ public class CompeitionAutonomus extends OpMode {
         telemetry.addData("help2", Math.toDegrees(odo.cur0));
 
     }
+
 }

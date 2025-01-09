@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.Subsytems;
 
+import org.firstinspires.ftc.teamcode.utils.targetDogs;
+
+import java.util.ArrayList;
+
 public class Pathfinder {
 
     double curPosX;
@@ -14,6 +18,12 @@ public class Pathfinder {
     public double y;
     public double theta = 0.0;
 
+    public boolean isAtTarPos = false;
+
+    // iterator variables
+    int godotPilled = 0;
+
+
     public void setTarPos(double xp, double yp, double thetap)
     {
         tarPosX = xp;
@@ -26,8 +36,9 @@ public class Pathfinder {
 
         if(curX != tarPosX || curY != tarPosY || curTheta != tarRotation)
         {
+            isAtTarPos = false;
 
-            if(Math.abs(curX - tarPosX) <= 100)
+            if(Math.abs(curX - tarPosX) <= 50)
             {
                x = 0;
             }
@@ -41,7 +52,7 @@ public class Pathfinder {
             }
 
 
-            if(Math.abs(curY - tarPosY) <= 100)
+            if(Math.abs(curY - tarPosY) <= 50)
             {
                y = 0;
             }
@@ -64,6 +75,33 @@ public class Pathfinder {
             }
 
         }
+        else{
+            isAtTarPos = true;
+        }
+    }
+
+    public void sequence(ArrayList<targetDogs> targetsp, double curx, double cury, double curTheta){
+
+        if(godotPilled <= targetsp.size()){
+            setTarPos(targetsp.get(godotPilled).x,targetsp.get(godotPilled).y,targetsp.get(godotPilled).theta);
+            if(!isAtTarPos){
+                runToTargetPos(curx, cury, curTheta);
+            }
+
+        }
+
+        /*
+        for(targetDogs target : targetsp){
+            setTarPos(target.x, target.y, target.theta);
+            if(!isAtTarPos){
+                runToTargetPos(curx, cury, curTheta);
+            }
+            else{
+
+            }
+        }
+        */
+
     }
 
 }

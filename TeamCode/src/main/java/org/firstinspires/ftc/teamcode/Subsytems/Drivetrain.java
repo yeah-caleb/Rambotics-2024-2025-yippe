@@ -27,6 +27,7 @@ public class Drivetrain {
 
     //Other Variables
     double max;
+    boolean precisionMode = false;
 
     public Drivetrain(HardwareMap hwMap)
     {
@@ -60,6 +61,13 @@ public class Drivetrain {
     //This one is for teleop
     public void GamepadInputs(double rotation, Gamepad gmpad){
 
+        if(gmpad.a){
+            precisionMode = true;
+        }
+        if(gmpad.b){
+            precisionMode = false;
+        }
+
         float xt = gmpad.left_stick_x;
         float yt = -gmpad.left_stick_y;
         float rx = gmpad.right_stick_x;
@@ -83,10 +91,18 @@ public class Drivetrain {
             rightBackPower  /= max;
         }
 
-        LMFront.setPower(leftFrontPower);
-        RMFront.setPower(rightFrontPower);
-        LMBack.setPower(leftBackPower);
-        RMBack.setPower(rightBackPower);
+        if(precisionMode == false) {
+            LMFront.setPower(leftFrontPower);
+            RMFront.setPower(rightFrontPower);
+            LMBack.setPower(leftBackPower);
+            RMBack.setPower(rightBackPower);
+        }
+        if(precisionMode == true) {
+            LMFront.setPower(leftFrontPower/2);
+            RMFront.setPower(rightFrontPower/2);
+            LMBack.setPower(leftBackPower/2);
+            RMBack.setPower(rightBackPower/2);
+        }
 
     }
 
@@ -133,16 +149,5 @@ public class Drivetrain {
         Ymov = 0;
         rXmov = 0;
     }
-
-public void shit(){
-
-        RMFront.setPower(1);
-        LMFront.setPower(1);
-        LMBack.setPower(1);
-        RMBack.setPower(1);
-
-}
-
-
 
 }
