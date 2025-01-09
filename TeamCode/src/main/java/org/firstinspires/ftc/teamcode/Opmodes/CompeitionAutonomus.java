@@ -38,6 +38,7 @@ public class CompeitionAutonomus extends OpMode {
     public void loop() {
 
         odo.updateCurPos();
+        path.sequence(sequance, odo.curX, odo.curY, odo.cur0);
         //path.runToTargetPos(odo.curX,odo.curY,odo.cur0);
 
         drivetrain.autoSetter(path.x, path.y, path.theta);
@@ -58,6 +59,9 @@ public class CompeitionAutonomus extends OpMode {
 
         telemetry.addData("help", Math.abs(path.tarRotation-odo.cur0));
         telemetry.addData("help2", Math.toDegrees(odo.cur0));
+
+        telemetry.addData("pill", path.godotPilled);
+        telemetry.addData("tarpos", path.isAtTarPos);
 
     }
 
