@@ -17,7 +17,7 @@ public class Arm {
 
     double armJoint;
 
-    Arm(HardwareMap hm){
+    public Arm(HardwareMap hm){
 
         RM = hm.get(DcMotorEx.class, "armMotor");
         LM = hm.get(DcMotorEx.class, "Odometry_Pod_Right");

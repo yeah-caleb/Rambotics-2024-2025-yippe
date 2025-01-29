@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Subsytems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /*
@@ -90,6 +91,14 @@ public class Odometry {
 
         curX = (Xc*Math.cos(Theta0) - Xp*Math.sin(Theta0));
         curY = (Xc*Math.sin(Theta0) + Xp*Math.cos(Theta0));
+    }
+
+    public void gamepadInputs(Gamepad gmpad){
+
+        if(gmpad.dpad_right){
+            resetEncoders();
+        }
+
     }
 
     /* Tool Functions */

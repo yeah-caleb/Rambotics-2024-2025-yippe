@@ -13,13 +13,13 @@ public class CompetitionJarlsbergianTeleop extends OpMode {
 
     Drivetrain drivetrain;
     Odometry odo;
-    //JarlsArm arm;
+    JarlsArm arm;
 
     @Override
     public void init() {
         drivetrain = new Drivetrain(hardwareMap);
         odo = new Odometry(hardwareMap);
-        //arm = new JarlsArm(hardwareMap);
+        arm = new JarlsArm(hardwareMap);
         odo.resetEncoders();
     }
 
@@ -27,7 +27,12 @@ public class CompetitionJarlsbergianTeleop extends OpMode {
     public void loop() {
         drivetrain.GamepadInputs(odo.cur0, gamepad1);
         odo.updateCurPos();
-        //arm.gamepadInputs(gamepad1);
+        arm.gamepadInputs(gamepad1);
+
+        odo.gamepadInputs(gamepad1);
+
+        //arm.leftWrist.setPosition(0.5);
+        //arm.rightWrist.setPosition(0.5);
 
         telemetry.addData("Rotation", Math.toDegrees(odo.cur0));
         telemetry.addData("X Value", odo.Xc);
@@ -41,6 +46,13 @@ public class CompetitionJarlsbergianTeleop extends OpMode {
 
         //telemetry.addData("wrist", arm.leftWrist.getPosition());
         telemetry.addData("oooooh", gamepad1.dpad_up);
+        telemetry.addData("shenanigans", arm.leftWrist.getPosition());
+        telemetry.addData("CLAWWWW", arm.clawPow);
+
+        telemetry.addData("curx", odo.curX);
+        telemetry.addData("cury", odo.curY);
+
+
 
     }
 }

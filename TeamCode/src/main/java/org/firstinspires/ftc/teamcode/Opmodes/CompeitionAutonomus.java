@@ -43,6 +43,8 @@ public class CompeitionAutonomus extends OpMode {
 
         drivetrain.autoSetter(path.x, path.y, path.theta);
         drivetrain.coordinateBasedState(odo.cur0);
+        odo.gamepadInputs(gamepad1);
+
 
         //drivetrain.shit();
 
@@ -61,7 +63,7 @@ public class CompeitionAutonomus extends OpMode {
         telemetry.addData("help2", Math.toDegrees(odo.cur0));
 
         telemetry.addData("pill", path.godotPilled);
-        telemetry.addData("tarpos", path.isAtTarPos);
+    //    telemetry.addData("tarpos", path.is);
 
     }
 

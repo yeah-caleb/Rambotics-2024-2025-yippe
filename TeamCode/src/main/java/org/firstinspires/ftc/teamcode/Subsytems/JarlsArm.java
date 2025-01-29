@@ -25,8 +25,8 @@ public class JarlsArm {
 
     double elbowPos;
     double forearmPos;
-    double wristPos;
-    double clawPow;
+    double wristPos = 0.0;
+    public double clawPow;
 
     public JarlsArm(HardwareMap hwMap){
         rightMotor = hwMap.get(DcMotorEx.class, "rightArm");
@@ -42,7 +42,7 @@ public class JarlsArm {
         claw = hwMap.get(CRServo.class, "Claw");
 
         rightElbow.setDirection(Servo.Direction.REVERSE);
-        rightWrist.setDirection(Servo.Direction.REVERSE);
+        leftWrist.setDirection(Servo.Direction.REVERSE);
 
         rightMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
@@ -59,31 +59,43 @@ public class JarlsArm {
         leftMotor.setPower(uppies);
         rightMotor.setPower(uppies);
 
-        if(gmpad.left_bumper){
+        if(gmpad.left_bumper && elbowPos <= 1){
             elbowPos += 0.05;
         }
-        if(gmpad.right_bumper){
+        if(gmpad.right_bumper && elbowPos >= 0){
             elbowPos -= 0.05;
         }
 
-        if(gmpad.dpad_up){
+        if(gmpad.dpad_up && wristPos <= 1){
             wristPos += 0.05;
         }
-        else if(gmpad.dpad_down){
+        else if(gmpad.dpad_down && wristPos >= 0){
             wristPos -= 0.05;
         }
 
-        //if(gmpad.a){
+        if(gmpad.y){
+            clawPow = 1;
+        }
+        else if(!gmpad.y && !gmpad.x){
+            clawPow = 0;
+        }
+        if(gmpad.x){
+            clawPow = -1;
+        }
+        else if(!gmpad.y && !gmpad.x){
+            clawPow = 0;
+        }
 
-        //}
+        leftArm.setPosition(0.5);
+        rightArm.setPosition(0.5);
 
         leftElbow.setPosition(elbowPos);
         rightElbow.setPosition(elbowPos);
 
-        rightWrist.setPosition(0.5);
-        leftWrist.setPosition(0.5);
+        rightWrist.setPosition(wristPos);
+        leftWrist.setPosition(wristPos);
 
-        //claw.setPower(1);
+        claw.setPower(clawPow);
 
 
     }

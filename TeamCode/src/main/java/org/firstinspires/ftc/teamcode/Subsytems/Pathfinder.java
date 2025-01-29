@@ -22,7 +22,7 @@ public class Pathfinder {
 
     // iterator variables
     public int godotPilled = 0;
-
+    public int wahooo = 0;
 
     public void setTarPos(double xp, double yp, double thetap)
     {
@@ -34,13 +34,27 @@ public class Pathfinder {
     public void runToTargetPos(double curX, double curY, double curTheta)
     {
 
-        if(Math.abs(curX - tarPosX) <= 50 || Math.abs(curY - tarPosY) <= 50 || Math.abs(tarRotation-Math.toDegrees(curTheta)) <= 20)
+        if(Math.abs(curX - tarPosX) <= 51 && Math.abs(curY - tarPosY) <= 51)
         {
+            isAtTarPos = true;
+            wahooo+=1;
+
+            if(Math.abs(curX - tarPosX) <= 50)
+            {
+                x = 0;
+            }
+            if(Math.abs(curY - tarPosY) <= 50)
+            {
+                y = 0;
+            }
+
+        }
+        else{
             isAtTarPos = false;
 
             if(Math.abs(curX - tarPosX) <= 50)
             {
-               x = 0;
+                x = 0;
             }
             else if(curX < tarPosX)
             {
@@ -54,7 +68,7 @@ public class Pathfinder {
 
             if(Math.abs(curY - tarPosY) <= 50)
             {
-               y = 0;
+                y = 0;
             }
             else if(curY < tarPosY)
             {
@@ -65,7 +79,7 @@ public class Pathfinder {
                 y = -0.5;
             }
 
-            if(Math.abs(tarRotation-Math.toDegrees(curTheta)) <= 20)
+            if(Math.abs(tarRotation-Math.toDegrees(curTheta)) >= 20)
             {
                 theta = 0.5;
             }
@@ -73,23 +87,20 @@ public class Pathfinder {
             {
                 theta = 0;
             }
-
-        }
-        else{
-            isAtTarPos = true;
         }
     }
 
     public void sequence(ArrayList<targetDogs> targetsp, double curx, double cury, double curTheta){
-        if(godotPilled <= targetsp.size()){
-            setTarPos(targetsp.get(godotPilled).x,targetsp.get(godotPilled).y,targetsp.get(godotPilled).theta);
+        if(godotPilled < targetsp.size()) {
+            setTarPos(targetsp.get(godotPilled).x, targetsp.get(godotPilled).y, targetsp.get(godotPilled).theta);
+        }
             if(!isAtTarPos){
                 runToTargetPos(curx, cury, curTheta);
             }
             else{
                 godotPilled += 1;
             }
-        }
+
 
         /*
         for(targetDogs target : targetsp){
