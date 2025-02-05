@@ -28,26 +28,27 @@ public class CompeitionAutonomus extends OpMode {
         path = new Pathfinder();
         odo.resetEncoders();
 
-        //path.setTarPos(200,-300,0);
+        path.targetPositions.add(new targetDogs(500, 300, 0));
+        path.targetPositions.add(new targetDogs(100,100,0));
+        //path.setTarPos(-500,300,0);
 
-        sequance.add(new targetDogs(200,100,0));
-        sequance.add(new targetDogs(50, 50, 0));
+        //sequance.add(new targetDogs(200,100,0));
+        //sequance.add(new targetDogs(50, 50, 0));
     }
 
     @Override
     public void loop() {
 
         odo.updateCurPos();
-        path.sequence(sequance, odo.curX, odo.curY, odo.cur0);
-        //path.runToTargetPos(odo.curX,odo.curY,odo.cur0);
 
-        drivetrain.autoSetter(path.x, path.y, path.theta);
+        path.sequence(path.targetPositions, odo.curX, odo.curY, odo.cur0);
+        drivetrain.autoSetter(path.x,path.y,path.theta);
         drivetrain.coordinateBasedState(odo.cur0);
-        odo.gamepadInputs(gamepad1);
+
+        telemetry.addData("At Target Pos?", path.isAtTarPos);
 
 
-        //drivetrain.shit();
-
+        /*
         telemetry.addData("X Value", path.x);
         telemetry.addData("Y Value", path.y);
         telemetry.addData("rx Value", path.theta);
@@ -64,6 +65,8 @@ public class CompeitionAutonomus extends OpMode {
 
         telemetry.addData("pill", path.godotPilled);
     //    telemetry.addData("tarpos", path.is);
+
+*/
 
     }
 

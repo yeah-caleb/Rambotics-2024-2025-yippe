@@ -23,7 +23,7 @@ public class JarlsArm {
 
     CRServo claw;
 
-    double elbowPos;
+    public double elbowPos;
     double forearmPos;
     double wristPos = 0.0;
     public double clawPow;

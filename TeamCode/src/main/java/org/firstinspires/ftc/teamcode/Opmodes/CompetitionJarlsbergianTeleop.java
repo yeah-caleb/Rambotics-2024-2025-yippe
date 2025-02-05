@@ -52,7 +52,7 @@ public class CompetitionJarlsbergianTeleop extends OpMode {
         telemetry.addData("curx", odo.curX);
         telemetry.addData("cury", odo.curY);
 
-
+        telemetry.addData("elbowpower", arm.elbowPos);
 
     }
 }

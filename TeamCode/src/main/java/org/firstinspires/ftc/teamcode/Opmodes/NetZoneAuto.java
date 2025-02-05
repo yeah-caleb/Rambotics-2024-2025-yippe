@@ -36,15 +36,15 @@ public class NetZoneAuto extends OpMode {
     public void loop() {
 
         odo.updateCurPos();
-        path.sequence(move, odo.curX, odo.curY, odo.cur0);
+        //path.sequence(move, odo.curX, odo.curY, odo.cur0);
 
         drivetrain.autoSetter(path.x, path.y, path.theta);
         drivetrain.coordinateBasedState(odo.cur0);
         odo.gamepadInputs(gamepad1);
 
-        telemetry.addData("godotpilled", path.godotPilled);
+        //telemetry.addData("godotpilled", path.godotPilled);
         telemetry.addData("tarpos????", path.isAtTarPos);
-        telemetry.addData("tarpos????", path.wahooo);
+        //telemetry.addData("tarpos????", path.wahooo);
 
 
 
