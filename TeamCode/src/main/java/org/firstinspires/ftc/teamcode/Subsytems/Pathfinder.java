@@ -14,6 +14,8 @@ public class Pathfinder {
     public double y;
     public double theta = 0.0;
 
+
+
     public boolean isAtTarPos = false;
 
     public ArrayList<targetDogs> targetPositions;
