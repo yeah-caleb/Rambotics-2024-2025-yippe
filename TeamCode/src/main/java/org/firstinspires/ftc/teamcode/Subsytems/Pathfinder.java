@@ -14,14 +14,12 @@ public class Pathfinder {
     public double y;
     public double theta = 0.0;
 
-
-
     public boolean isAtTarPos = false;
 
-    public ArrayList<targetDogs> targetPositions;
+    public ArrayList<targetDogs> targetPositions = new ArrayList<targetDogs>();
 
     // iterator variables
-    int count;
+    public int count;
 
     public void setTarPos(double xp, double yp, double thetap)
     {

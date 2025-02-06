@@ -47,6 +47,12 @@ public class CompeitionAutonomus extends OpMode {
 
         telemetry.addData("At Target Pos?", path.isAtTarPos);
 
+        telemetry.addData("Current X", odo.curX);
+        telemetry.addData("Current Y", odo.curY);
+
+        telemetry.addData("Current Path", path.count);
+
+
 
         /*
         telemetry.addData("X Value", path.x);
