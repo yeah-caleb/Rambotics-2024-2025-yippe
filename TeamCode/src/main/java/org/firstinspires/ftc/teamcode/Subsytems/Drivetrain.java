@@ -27,7 +27,7 @@ public class Drivetrain {
 
     //Other Variables
     double max;
-    boolean precisionMode = false;
+    public boolean precisionMode = false;
 
     public Drivetrain(HardwareMap hwMap)
     {
@@ -136,11 +136,25 @@ public class Drivetrain {
             rightBackPower  /= max;
         }
 
+        if(precisionMode == false) {
+            LMFront.setPower(leftFrontPower);
+            RMFront.setPower(rightFrontPower);
+            LMBack.setPower(leftBackPower);
+            RMBack.setPower(rightBackPower);
+        }
+        if(precisionMode == true) {
+            LMFront.setPower(leftFrontPower/2);
+            RMFront.setPower(rightFrontPower/2);
+            LMBack.setPower(leftBackPower/2);
+            RMBack.setPower(rightBackPower/2);
+        }
+
+        /*
         LMFront.setPower(leftFrontPower);
         RMFront.setPower(rightFrontPower);
         LMBack.setPower(leftBackPower);
         RMBack.setPower(rightBackPower);
-
+*/
     }
 
     // Tool functions

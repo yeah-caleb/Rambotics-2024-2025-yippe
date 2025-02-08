@@ -31,7 +31,7 @@ public class AutoLeft extends OpMode {
 
         odo.updateCurPos();
 
-        path.runToTargetPos(odo.curX,odo.curY,odo.cur0);
+        //path.runToTargetPos(odo.curX,odo.curY,odo.cur0);
 
         drivetrain.autoSetter(path.x, path.y, path.theta);
         drivetrain.coordinateBasedState(odo.cur0);

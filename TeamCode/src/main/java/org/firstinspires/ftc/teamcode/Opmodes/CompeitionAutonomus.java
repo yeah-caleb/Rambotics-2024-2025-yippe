@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.teamcode.Subsytems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Subsytems.JarlsArm;
 import org.firstinspires.ftc.teamcode.Subsytems.Odometry;
 import org.firstinspires.ftc.teamcode.Subsytems.Pathfinder;
 import org.firstinspires.ftc.teamcode.utils.targetDogs;
@@ -16,6 +17,7 @@ public class CompeitionAutonomus extends OpMode {
     Drivetrain drivetrain;
     Odometry odo;
     Pathfinder path;
+    JarlsArm arm;
 
     ArrayList<targetDogs> sequance = new ArrayList<>();
 
@@ -26,10 +28,31 @@ public class CompeitionAutonomus extends OpMode {
         drivetrain = new Drivetrain(hardwareMap);
         odo = new Odometry(hardwareMap);
         path = new Pathfinder();
+        arm = new JarlsArm(hardwareMap);
+
+        drivetrain.precisionMode = true;
+
         odo.resetEncoders();
 
-        path.targetPositions.add(new targetDogs(500, 300, 0));
-        path.targetPositions.add(new targetDogs(100,100,0));
+        path.targetPositions.add(new targetDogs(1200, 0, 0));
+        path.targetPositions.add(new targetDogs(1200,-100,0));
+        path.targetPositions.add(new targetDogs(200,-100,0));
+
+        path.targetPositions.add(new targetDogs(1200,-100,0));
+        path.targetPositions.add(new targetDogs(1200,-160,0));
+        path.targetPositions.add(new targetDogs(200,-160,0));
+
+        path.targetPositions.add(new targetDogs(1200,-160,0));
+        path.targetPositions.add(new targetDogs(1200,-200,0));
+        path.targetPositions.add(new targetDogs(200,-200,0));
+
+
+
+
+
+
+
+
         //path.setTarPos(-500,300,0);
 
         //sequance.add(new targetDogs(200,100,0));
@@ -38,12 +61,13 @@ public class CompeitionAutonomus extends OpMode {
 
     @Override
     public void loop() {
-
-        odo.updateCurPos();
-
         path.sequence(path.targetPositions, odo.curX, odo.curY, odo.cur0);
         drivetrain.autoSetter(path.x,path.y,path.theta);
         drivetrain.coordinateBasedState(odo.cur0);
+
+        odo.updateCurPos();
+
+        arm.AHHHH(0);
 
         telemetry.addData("At Target Pos?", path.isAtTarPos);
 
@@ -51,6 +75,14 @@ public class CompeitionAutonomus extends OpMode {
         telemetry.addData("Current Y", odo.curY);
 
         telemetry.addData("Current Path", path.count);
+
+        telemetry.addData("Targets List Size", path.targetPositions.size());
+
+        telemetry.addData("Target Y", path.targetPositions.get(path.count).y);
+        telemetry.addData("Target X", path.targetPositions.get(path.count).x);
+
+        telemetry.addData("Target Positions X Double check", path.tarPosX);
+        telemetry.addData("Target Positions Y Double check", path.tarPosY);
 
 
 

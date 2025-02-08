@@ -14,12 +14,14 @@ public class Pathfinder {
     public double y;
     public double theta = 0.0;
 
+    public double buffer = 20;
+
     public boolean isAtTarPos = false;
 
     public ArrayList<targetDogs> targetPositions = new ArrayList<targetDogs>();
 
     // iterator variables
-    public int count;
+    public int count = 0;
 
     public void setTarPos(double xp, double yp, double thetap)
     {
@@ -28,10 +30,10 @@ public class Pathfinder {
         tarRotation = thetap;
     }
 
-    public void runToTargetPos(double curX, double curY, double curTheta)
+    public void runToTargetPos(double curX, double curY, double curTheta, double tarX, double tarY, double tarTheta)
     {
 
-        if(Math.abs(curX - tarPosX) <= 51 && Math.abs(curY - tarPosY) <= 51)
+        if(Math.abs(curX - tarX) <= buffer && Math.abs(curY - tarY) <= buffer)
         {
             isAtTarPos = true;
 
@@ -43,29 +45,29 @@ public class Pathfinder {
         else{
             isAtTarPos = false;
 
-            if(Math.abs(curX - tarPosX) <= 50)
+            if(Math.abs(curX - tarX) <= buffer)
             {
                 x = 0;
             }
-            else if(curX < tarPosX)
+            else if(curX < tarX)
             {
                 x = 0.5;
             }
-            else if(curX > tarPosX)
+            else if(curX > tarX)
             {
                 x = -0.5;
             }
 
 
-            if(Math.abs(curY - tarPosY) <= 50)
+            if(Math.abs(curY - tarY) <= buffer)
             {
                 y = 0;
             }
-            else if(curY < tarPosY)
+            else if(curY < tarY)
             {
                 y = 0.5;
             }
-            else if(curY > tarPosY)
+            else if(curY > tarY)
             {
                 y = -0.5;
             }
@@ -85,10 +87,9 @@ public class Pathfinder {
     }
 
     public void sequence(ArrayList<targetDogs> targets, double curX, double curY, double curTheta){
-        count = 0;
+       // setTarPos(targets.get(count).x, targets.get(count).y, targets.get(count).theta);
 
-        setTarPos(targets.get(count).x, targets.get(count).y, targets.get(count).theta);
-        runToTargetPos(curX, curY, curTheta);
+        runToTargetPos(curX, curY, curTheta, targets.get(count).x, targets.get(count).y, targets.get(count).theta);
 
         if(isAtTarPos && count < targets.size()){
             count+=1;
