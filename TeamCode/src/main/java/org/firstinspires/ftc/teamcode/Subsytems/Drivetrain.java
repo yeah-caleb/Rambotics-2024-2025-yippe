@@ -27,8 +27,10 @@ public class Drivetrain {
 
     //Other Variables
     double max;
+    public boolean precisionMode = false;
 
-    public Drivetrain(HardwareMap hwMap){
+    public Drivetrain(HardwareMap hwMap)
+    {
         RMFront = hwMap.get(DcMotorEx.class, "rightFront");
         LMFront = hwMap.get(DcMotorEx.class, "leftFront");
         RMBack = hwMap.get(DcMotorEx.class, "rightRear");
@@ -43,38 +45,14 @@ public class Drivetrain {
         LMBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    // Functions for Autonomus field centric movement
+    // Functions for field centric movement
 
-    public void moveY(boolean sign, double rotation){
+    public void translate(double xp, double yp, double thetap, double rotation)
+    {
 
-        if(sign) {
-            Xmov = (1 * Math.cos(rotation) - (0 * Math.sin(rotation)));
-        }
-        else{
-            Xmov = -(0 * Math.cos(rotation) - (1 * Math.sin(rotation)));
-        }
-
-    }
-
-    public void moveX(boolean sign, double rotation){
-
-        if(sign) {
-            Ymov = (0 * Math.sin(rotation) + (1 * Math.cos(rotation)));
-        }
-        else{
-            Ymov = -(0 * Math.sin(rotation) + (1 * Math.cos(rotation)));
-        }
-
-
-    }
-
-    public void turnThetaClockwise(boolean sign){
-        if(sign) {
-            rXmov = 1;
-        }
-        else{
-            rXmov = -1;
-        }
+        Xmov = (xp * Math.cos(rotation) - (yp * Math.sin(rotation)));
+        Ymov = (xp * Math.sin(rotation) + (yp * Math.cos(rotation)));
+        rXmov = thetap;
 
     }
 
@@ -83,13 +61,19 @@ public class Drivetrain {
     //This one is for teleop
     public void GamepadInputs(double rotation, Gamepad gmpad){
 
+        if(gmpad.a){
+            precisionMode = true;
+        }
+        if(gmpad.b){
+            precisionMode = false;
+        }
+
         float xt = gmpad.left_stick_x;
         float yt = -gmpad.left_stick_y;
         float rx = gmpad.right_stick_x;
 
         x = (xt * Math.cos(rotation) - (yt * Math.sin(rotation)));
         y = (xt * Math.sin(rotation) + (yt * Math.cos(rotation)));
-
 
         double leftFrontPower = y+x+rx;
         double rightFrontPower = y-x-rx;
@@ -107,21 +91,70 @@ public class Drivetrain {
             rightBackPower  /= max;
         }
 
+        if(precisionMode == false) {
+            LMFront.setPower(leftFrontPower);
+            RMFront.setPower(rightFrontPower);
+            LMBack.setPower(leftBackPower);
+            RMBack.setPower(rightBackPower);
+        }
+        if(precisionMode == true) {
+            LMFront.setPower(leftFrontPower/2);
+            RMFront.setPower(rightFrontPower/2);
+            LMBack.setPower(leftBackPower/2);
+            RMBack.setPower(rightBackPower/2);
+        }
 
+    }
+
+    // Auto Setter Function
+    public void autoSetter(double xp, double yp, double rXp){
+        Xmov = xp;
+        Ymov = yp;
+        rXmov = rXp;
+    }
+
+    // This one is for auto
+    public void coordinateBasedState(double cur0p)
+    {
+
+        double Xmov2 = (Xmov * Math.cos(cur0p) - (Ymov * Math.sin(cur0p)));
+        double Ymov2 = (Xmov * Math.sin(cur0p) + (Ymov * Math.cos(cur0p)));
+
+        double leftFrontPower = Ymov2+Xmov2+rXmov;
+        double rightFrontPower = -Ymov2+Xmov2-rXmov;
+        double leftBackPower = -Ymov2+Xmov2+rXmov;
+        double rightBackPower = Ymov2+Xmov2-rXmov;
+
+        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+        max = Math.max(max, Math.abs(leftBackPower));
+        max = Math.max(max, Math.abs(rightBackPower));
+
+        if (max > 1.0) {
+            leftFrontPower  /= max;
+            rightFrontPower /= max;
+            leftBackPower   /= max;
+            rightBackPower  /= max;
+        }
+
+        if(precisionMode == false) {
+            LMFront.setPower(leftFrontPower);
+            RMFront.setPower(rightFrontPower);
+            LMBack.setPower(leftBackPower);
+            RMBack.setPower(rightBackPower);
+        }
+        if(precisionMode == true) {
+            LMFront.setPower(leftFrontPower/2);
+            RMFront.setPower(rightFrontPower/2);
+            LMBack.setPower(leftBackPower/2);
+            RMBack.setPower(rightBackPower/2);
+        }
+
+        /*
         LMFront.setPower(leftFrontPower);
         RMFront.setPower(rightFrontPower);
         LMBack.setPower(leftBackPower);
         RMBack.setPower(rightBackPower);
-
-    }
-
-
-    // This one is for auto
-    public void coordinateBasedState(){
-        RMFront.setPower(-Xmov+Ymov-rXmov);
-        LMFront.setPower(Xmov+Ymov+rXmov);
-        RMBack.setPower(Xmov+Ymov-rXmov);
-        LMBack.setPower(-Xmov+Ymov+rXmov);
+*/
     }
 
     // Tool functions
@@ -130,6 +163,5 @@ public class Drivetrain {
         Ymov = 0;
         rXmov = 0;
     }
-
 
 }
