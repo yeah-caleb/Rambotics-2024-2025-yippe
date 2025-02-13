@@ -100,12 +100,13 @@ public class JarlsArm {
 
     }
 
-    public void AHHHH(double AH){
+    public void state(double AH, double AHH){
 
         leftElbow.setPosition(AH);
         rightElbow.setPosition(AH);
 
-
+        rightArm.setPosition(AHH);
+        leftArm.setPosition(AHH);
     }
 
 }

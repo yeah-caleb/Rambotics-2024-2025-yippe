@@ -30,44 +30,32 @@ public class CompeitionAutonomus extends OpMode {
         path = new Pathfinder();
         arm = new JarlsArm(hardwareMap);
 
-        drivetrain.precisionMode = true;
-
         odo.resetEncoders();
 
-        path.targetPositions.add(new targetDogs(1200, 0, 0));
-        path.targetPositions.add(new targetDogs(1200,-100,0));
-        path.targetPositions.add(new targetDogs(200,-100,0));
+        path.targetPositions.add(new targetDogs(1200, 0, 0, true));
+        path.targetPositions.add(new targetDogs(1200,-140,0, true));
+        path.targetPositions.add(new targetDogs(100,-140,0, false));
 
-        path.targetPositions.add(new targetDogs(1200,-100,0));
-        path.targetPositions.add(new targetDogs(1200,-160,0));
-        path.targetPositions.add(new targetDogs(200,-160,0));
+        path.targetPositions.add(new targetDogs(1200,-140,0, true));
+        path.targetPositions.add(new targetDogs(1200,-250,0, true));
+        path.targetPositions.add(new targetDogs(150,-250,0, false));
 
-        path.targetPositions.add(new targetDogs(1200,-160,0));
-        path.targetPositions.add(new targetDogs(1200,-200,0));
-        path.targetPositions.add(new targetDogs(200,-200,0));
+        path.targetPositions.add(new targetDogs(1200,-250,0, true));
+        path.targetPositions.add(new targetDogs(1200,-420,0, true));
+        path.targetPositions.add(new targetDogs(200,-420,0, false));
 
-
-
-
-
-
-
-
-        //path.setTarPos(-500,300,0);
-
-        //sequance.add(new targetDogs(200,100,0));
-        //sequance.add(new targetDogs(50, 50, 0));
     }
 
     @Override
     public void loop() {
-        path.sequence(path.targetPositions, odo.curX, odo.curY, odo.cur0);
+
+        path.sequence(path.targetPositions, odo.curX, odo.curY, odo.cur0, drivetrain);
         drivetrain.autoSetter(path.x,path.y,path.theta);
         drivetrain.coordinateBasedState(odo.cur0);
 
         odo.updateCurPos();
 
-        arm.AHHHH(0);
+        arm.state(0, 0);
 
         telemetry.addData("At Target Pos?", path.isAtTarPos);
 
@@ -83,28 +71,6 @@ public class CompeitionAutonomus extends OpMode {
 
         telemetry.addData("Target Positions X Double check", path.tarPosX);
         telemetry.addData("Target Positions Y Double check", path.tarPosY);
-
-
-
-        /*
-        telemetry.addData("X Value", path.x);
-        telemetry.addData("Y Value", path.y);
-        telemetry.addData("rx Value", path.theta);
-
-        telemetry.addData("tarPos X", path.tarPosX);
-        telemetry.addData("tarPos Y", path.tarPosY);
-
-        telemetry.addData("curX Value", odo.curX);
-        telemetry.addData("curY Value", odo.curY);
-        telemetry.addData("currx Value", odo.cur0);
-
-        telemetry.addData("help", Math.abs(path.tarRotation-odo.cur0));
-        telemetry.addData("help2", Math.toDegrees(odo.cur0));
-
-        telemetry.addData("pill", path.godotPilled);
-    //    telemetry.addData("tarpos", path.is);
-
-*/
 
     }
 

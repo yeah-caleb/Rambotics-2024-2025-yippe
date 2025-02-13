@@ -86,8 +86,15 @@ public class Pathfinder {
         }
     }
 
-    public void sequence(ArrayList<targetDogs> targets, double curX, double curY, double curTheta){
+    public void sequence(ArrayList<targetDogs> targets, double curX, double curY, double curTheta, Drivetrain drive){
        // setTarPos(targets.get(count).x, targets.get(count).y, targets.get(count).theta);
+
+        if(!targets.get(count).precision){
+            drive.precisionMode = false;
+        }
+        else {
+            drive.precisionMode = true;
+        }
 
         runToTargetPos(curX, curY, curTheta, targets.get(count).x, targets.get(count).y, targets.get(count).theta);
 

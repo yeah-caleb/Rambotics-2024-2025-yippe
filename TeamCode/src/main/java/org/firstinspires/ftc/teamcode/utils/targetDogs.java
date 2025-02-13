@@ -6,10 +6,20 @@ public class targetDogs {
     public double y;
     public double theta;
 
+    public boolean precision;
+
     public targetDogs(double xp, double yp, double thetap){
         x = xp;
         y = yp;
         theta = thetap;
+    }
+
+    public targetDogs(double xp, double yp, double thetap, boolean precise){
+        x = xp;
+        y = yp;
+        theta = thetap;
+
+        precision = precise;
     }
 
 }

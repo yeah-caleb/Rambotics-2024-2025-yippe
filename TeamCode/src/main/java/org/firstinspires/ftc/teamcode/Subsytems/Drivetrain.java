@@ -143,10 +143,10 @@ public class Drivetrain {
             RMBack.setPower(rightBackPower);
         }
         if(precisionMode == true) {
-            LMFront.setPower(leftFrontPower/2);
-            RMFront.setPower(rightFrontPower/2);
-            LMBack.setPower(leftBackPower/2);
-            RMBack.setPower(rightBackPower/2);
+            LMFront.setPower(leftFrontPower/1.60);
+            RMFront.setPower(rightFrontPower/1.60);
+            LMBack.setPower(leftBackPower/1.60);
+            RMBack.setPower(rightBackPower/1.60);
         }
 
         /*
